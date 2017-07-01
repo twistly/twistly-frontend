@@ -19,7 +19,7 @@
             <div class="registration">
                 Don't have an account yet?
                 <br>
-                <router-view :to="{ name: 'signup' }">Create an account</a>
+                <router-link :to="{ name: 'signup' }">Create an account</router-link>
             </div>
         </form>
     </div>

@@ -13,7 +13,7 @@
             <div class="registration">
                 Already have an account?
                 <br>
-                <router-view :to="{ name: 'signin' }">Signin</a>
+                <router-link :to="{ name: 'signin' }">Signin</router-link>
             </div>
         </form>
     </div>
