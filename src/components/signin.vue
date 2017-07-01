@@ -50,10 +50,14 @@ export default {
         }
     },
     computed: {
-        ...mapGetters({
-            error: 'authError',
-            stack: 'authStack'
-        })
+        ...mapGetters([
+            'authError',
+            'authStack'
+        ]),
+        error() {
+            const vm = this;
+            return vm.authError ? vm.authError.response.data.error : null;
+        }
     }
 };
 </script>

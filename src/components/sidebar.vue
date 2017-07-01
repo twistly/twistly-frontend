@@ -45,10 +45,13 @@
                         </li>
                     </template>
                     <template v-else>
-                        <li>
-                            <a v-bind:href="'/auth/tumblr?api_key=' + user.apiKey">
+                        <li v-if="user.apiKey">
+                            <a v-bind:href="'https://api.twistly.xyz/auth/tumblr?api_key=' + user.apiKey">
                                 <i class="fa fa-cogs-o"></i> <span>Link an account</span>
                             </a>
+                        </li>
+                        <li v-else>
+                            <span>Your account doesn't have API access enabled.</span>
                         </li>
                     </template>
                 </p>
@@ -87,6 +90,11 @@ export default {
 #sidebar {
     padding-bottom: 15px;
 }
+#sidebar span.api_warning {
+    color: white;
+    font-size: 10px;
+}
+
 .sidebar-menu {
     margin-top: 60px;
     padding-top: 15px;

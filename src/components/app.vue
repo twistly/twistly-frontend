@@ -114,10 +114,6 @@ export default {
 </script>
 
 <style>
-@import "https://cdn.rawgit.com/OmgImAlexis/Twistly/aa19fe07f2aa1dc7eeb79921ceb1e8f33ac1c08f/app/public/css/vender.min.css";
-@import "https://cdn.rawgit.com/OmgImAlexis/Twistly/aa19fe07f2aa1dc7eeb79921ceb1e8f33ac1c08f/app/public/assets/css/style.css";
-@import "https://cdn.rawgit.com/OmgImAlexis/Twistly/aa19fe07f2aa1dc7eeb79921ceb1e8f33ac1c08f/app/public/assets/css/style-responsive.css";
-@import "https://cdn.rawgit.com/OmgImAlexis/Twistly/aa19fe07f2aa1dc7eeb79921ceb1e8f33ac1c08f/app/public/css/core.min.css";
 #nav-accordion {
     height: 100%;
     overflow: scroll;

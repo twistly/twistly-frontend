@@ -5,7 +5,9 @@ const getBlogs = () => {
         api.get('blog').then(({data}) => {
             resolve({blogs: data.blogs});
         }).catch(error => {
-            console.error(error);
+            if (error.response.status === 404) {
+                return resolve({blogs: []});
+            }
             reject(error);
         });
     });

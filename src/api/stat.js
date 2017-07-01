@@ -10,7 +10,12 @@ const getStats = ({blogUrl, limit = 30}) => {
             resolve({
                 stats: data.stats
             });
-        }).catch(reject);
+        }).catch(error => {
+            if (error.response.status === 404) {
+                return resolve({stats: []});
+            }
+            reject(error);
+        });
     });
 };
 

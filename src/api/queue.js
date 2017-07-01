@@ -4,7 +4,12 @@ const getQueues = () => {
     return new Promise((resolve, reject) => {
         api.get('queue').then(({data}) => {
             resolve({queues: data.queues});
-        }).catch(reject);
+        }).catch(error => {
+            if (error.response.status === 404) {
+                return resolve({queues: []});
+            }
+            reject(error);
+        });
     });
 };
 
