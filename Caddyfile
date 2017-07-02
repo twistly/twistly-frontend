@@ -6,24 +6,27 @@
     errors stdout
 
     rewrite {
+        if {file} not favicon.ico
+        if {path} not /dist/build.js
+        if {path} not /dist/build.js.map
         regexp .*
-        to {path} /
+        to /
     }
 
     # security headers
     header / {
         # Enable HTTP Strict Transport Security (HSTS) to force clients to always connect via HTTPS
-        #Strict-Transport-Security "max-age=7776000;"
+        Strict-Transport-Security "max-age=7776000;"
         # Enable cross-site filter (XSS) and tell browser to block detected attacks
         #X-XSS-Protection "1; mode=block"
         # Prevent some browsers from MIME-sniffing a response away from the declared Content-Type
-        #X-Content-Type-Options "nosniff"
+        X-Content-Type-Options "nosniff"
         # Disallow the site to be rendered within a frame (clickjacking protection)
-        #X-Frame-Options "DENY"
+        X-Frame-Options "DENY"
         # Pin the Let's Encrypt Public cert for 90 days
         Public-Key-Pins "pin-sha256='C5+lpZ7tcVwmwQIMcRtPbsQtWLABXhQzejna0wHFr8M='; pin-sha256='YLh1dUR9y6Kja30RrAn7JKnbQG/uEtLMkBgFF2Fuihg='; max-age=7776000"
         # Set customer server name
-        #Server "🦄"
-        #Referrer-Policy "no-referrer"
+        Server "🦄"
+        Referrer-Policy "no-referrer"
     }
 }
