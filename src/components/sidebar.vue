@@ -4,7 +4,7 @@
             <ul id="nav-accordion" class="sidebar-menu">
                 <p class="centered">
                     <a href="/account">
-                        <img src="httpd://placehold.it/60x60?text=+" width="60" class="img-circle">
+                        <img src="https://placehold.it/60x60?text=+" width="60" class="img-circle">
                         <h5 class="centered">{{user.name || user.username}}</h5>
                     </a>
                     <li class="mt">
