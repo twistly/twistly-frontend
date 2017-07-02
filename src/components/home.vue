@@ -7,7 +7,7 @@
                     <div class="darkblue-panel pn">
                         <br>
                         <br>
-                        <p><img src="http://placehold.it/60x60?text=+" class="img-circle" width="80"></p>
+                        <p><img src="https://placehold.it/60x60?text=+" class="img-circle" width="80"></p>
                         <p><b>{{blog.url}}</b></p>
                         <div class="row">
                             <div class="col-md-6">
