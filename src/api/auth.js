@@ -10,6 +10,17 @@ const signin = ({username, password}) => {
     });
 };
 
+const signup = ({username, email, password}) => {
+    return new Promise((resolve, reject) => {
+        api.post('user', {username, email, password}).then(({data}) => {
+            resolve({
+                token: data.token
+            });
+        }).catch(reject);
+    });
+};
+
 export default {
-    signin
+    signin,
+    signup
 };

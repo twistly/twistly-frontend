@@ -1,3 +1,4 @@
+import dotProp from 'dot-prop';
 import {auth} from '../../api/';
 import * as types from '../mutation-types';
 
@@ -9,6 +10,15 @@ const state = {
 
 const getters = {
     isAuthenticated: state => state.isAuthenticated,
+    // UserError should be a user readable error message in their selected language
+    authUserError: state => {
+        const error = dotProp.get(state.error, 'response.data.error');
+        // If we have multiple errors we just return the first and let the user submit again to get the next one.
+        if (error === 'Validation failed') {
+            return dotProp.get(state.error, 'response.data.details')[0].message;
+        }
+        return error;
+    },
     authError: state => state.error,
     authStack: state => state.stack
 };
@@ -17,6 +27,23 @@ const actions = {
     signin({commit}, {username, password}) {
         return new Promise(resolve => {
             auth.signin({username, password}).then(({token}) => {
+                commit(types.AUTHENTICATION_SUCCESS, {token});
+                resolve({token});
+            }).catch(err => {
+                if (err.message) {
+                    commit(types.AUTHENTICATION_FAILURE, {
+                        error: err
+                    });
+                } else {
+                    const {error, stack} = err.response.data;
+                    commit(types.AUTHENTICATION_FAILURE, {error, stack});
+                }
+            });
+        });
+    },
+    signup({commit}, {username, email, password}) {
+        return new Promise(resolve => {
+            auth.signup({username, email, password}).then(({token}) => {
                 commit(types.AUTHENTICATION_SUCCESS, {token});
                 resolve({token});
             }).catch(err => {

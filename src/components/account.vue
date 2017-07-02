@@ -1,9 +1,27 @@
 <template>
-    <div>Account</div>
+    <div>
+        <h1>Account</h1>
+        <pre>{{user}}</pre>
+    </div>
 </template>
 
 <script>
+import {mapGetters} from 'vuex';
+
 export default {
-    name: 'account'
+    name: 'account',
+    data() {
+        return {
+            loading: false
+        };
+    },
+    computed: {
+        ...mapGetters([
+            'isAuthenticated',
+            'blogs',
+            'gainedThisWeek',
+            'user'
+        ])
+    }
 };
 </script>

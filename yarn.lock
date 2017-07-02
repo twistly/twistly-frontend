@@ -2291,7 +2291,7 @@ domutils@1.5:
     dom-serializer "0"
     domelementtype "1"
 
-dot-prop@^4.1.0:
+dot-prop@^4.1.0, dot-prop@^4.1.1:
   version "4.1.1"
   resolved "https://registry.yarnpkg.com/dot-prop/-/dot-prop-4.1.1.tgz#a8493f0b7b5eeec82525b5c7587fa7de7ca859c1"
   dependencies:
@@ -3910,10 +3910,6 @@ jodid25519@^1.0.0:
   resolved "https://registry.yarnpkg.com/jodid25519/-/jodid25519-1.0.2.tgz#06d4912255093419477d425633606e0e90782967"
   dependencies:
     jsbn "~0.1.0"
-
-jquery@>=1.7:
-  version "3.2.1"
-  resolved "https://registry.yarnpkg.com/jquery/-/jquery-3.2.1.tgz#5c4d9de652af6cd0a770154a631bba12b015c787"
 
 js-base64@^2.1.8, js-base64@^2.1.9:
   version "2.1.9"
@@ -6435,12 +6431,6 @@ type-is@~1.6.15:
     media-typer "0.3.0"
     mime-types "~2.1.15"
 
-typeahead.js@^0.11.1:
-  version "0.11.1"
-  resolved "https://registry.yarnpkg.com/typeahead.js/-/typeahead.js-0.11.1.tgz#4e64e671b22310a8606f4aec805924ba84b015b8"
-  dependencies:
-    jquery ">=1.7"
-
 typedarray@~0.0.5:
   version "0.0.6"
   resolved "https://registry.yarnpkg.com/typedarray/-/typedarray-0.0.6.tgz#867ac74e3864187b1d3d47d996a78ec5c8830777"
@@ -6687,12 +6677,6 @@ vueify@^9.4.1:
     vue-hot-reload-api "^2.0.1"
     vue-template-compiler "^2.0.0-alpha.8"
     vue-template-es2015-compiler "^1.2.2"
-
-vuejs-autocomplete@^0.1.1:
-  version "0.1.1"
-  resolved "https://registry.yarnpkg.com/vuejs-autocomplete/-/vuejs-autocomplete-0.1.1.tgz#8dda2d58a91bdd90bbcc8401294bcb539619c8e5"
-  dependencies:
-    typeahead.js "^0.11.1"
 
 vuex-i18n@^1.3.4:
   version "1.3.4"

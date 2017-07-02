@@ -3,8 +3,8 @@ import axios from 'axios';
 import {apiLogger as log} from '../log';
 
 const api = axios.create({
-    baseURL: process.env.NODE_ENV === 'production' ? 'https://api.twistly.xyz' : 'http://localhost:3000/',
-    timeout: 10000,
+    baseURL: process.env.BASE_URL || 'http://localhost:3000/',
+    timeout: 5000,
     headers: {
         Accept: 'application/json',
         'Content-Type': 'application/json'
@@ -16,7 +16,6 @@ api.interceptors.request.use(request => {
     const headers = request.headers || (request.headers = {});
 
     if (token !== null && token !== 'undefined') {
-        // @TODO: Switch back to Bearer once we have jwt added properly
         log.debug(`setting token to ${token}`);
         headers.Authorization = `Bearer ${token}`;
     }
