@@ -9,7 +9,7 @@
         if {file} not favicon.ico
         if {file} not favicon.png
         if {file} not build.js
-        to /index.html
+        to {path} {path}/ /index.html
     }
 
     # security headers
