@@ -6,10 +6,8 @@
     errors stdout
 
     rewrite {
-        if {file} not favicon.ico
-        if {file} not favicon.png
-        if {file} not build.js
-        to {path} {path}/ /index.html
+        regexp .*
+        to {path} /
     }
 
     # security headers
