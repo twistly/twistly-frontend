@@ -8,7 +8,7 @@
     rewrite {
         if {file} not favicon.ico
         if {path} not /dist/app.bundle.js
-        if {path} not /dist/app.bundle.map
+        if {path} not /dist/app.bundle.js.map
         regexp .*
         to /
     }
