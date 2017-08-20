@@ -82,7 +82,7 @@ router.beforeEach((to, from, next) => {
     if (to.meta.auth && !token) {
         return next({name: 'home'});
     }
-    next();
+    return next();
 });
 
 export default router;

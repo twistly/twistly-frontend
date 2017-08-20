@@ -1,20 +1,23 @@
 import api from './api';
 
-const getStats = ({blogUrl, limit = 30}) => {
+const getStats = ({url, limit = 30}) => {
     return new Promise((resolve, reject) => {
-        api.get(`stat/${blogUrl}`, {
+        api.get(`stat/${url}`, {
             params: {
                 limit
             }
         }).then(({data}) => {
-            resolve({
-                stats: data.stats
-            });
+            if (data.message) {
+                return reject(new Error(data.message));
+            }
+
+            resolve(data.stats);
         }).catch(error => {
             if (error.response.status === 404) {
-                return resolve({stats: []});
+                return resolve([]);
             }
-            reject(error);
+
+            return reject(error);
         });
     });
 };

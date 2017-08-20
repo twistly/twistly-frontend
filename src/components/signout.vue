@@ -10,9 +10,7 @@ export default {
     mounted() {
         const vm = this;
         vm.signout();
-        vm.$router.push({
-            name: 'home'
-        });
+        vm.$router.push({name: 'home'});
     },
     methods: {
         ...mapActions([

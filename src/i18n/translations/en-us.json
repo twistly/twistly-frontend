@@ -1,9 +1,3 @@
 {
-    "loading": "loading",
-    "series": {
-        "add": {
-            "new": "Add a new series",
-            "existing": "Add an existing series"
-        }
-    }
+    "loading": "loading"
 }

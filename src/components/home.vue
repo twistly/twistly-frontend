@@ -11,12 +11,12 @@
                         <p><b>{{blog.url}}</b></p>
                         <div class="row">
                             <div class="col-md-6">
-                                <p class="small mt">New Followers</p>
-                                <p>+100</p>
+                                <p class="small mt">{{ $t('New Followers') }}</p>
+                                <p>{{ gainedThisWeek(blog) }}</p>
                             </div>
                             <div class="col-md-6">
-                                <p class="small mt">Total Followers</p>
-                                <p>{{blog.followerCount}}</p>
+                                <p class="small mt">{{ $t('Total Followers') }}</p>
+                                <p>{{ blog.followerCount }}</p>
                             </div>
                         </div>
                     </div>
@@ -30,6 +30,7 @@
 </template>
 
 <script>
+import stats from 'stats-lite';
 import {mapGetters, mapActions} from 'vuex';
 
 import loader from './loader.vue';
@@ -48,11 +49,12 @@ export default {
                 vm.getUser();
                 vm.getAllBlogs();
             }
-        }).then(() => {
+
             vm.loading = false;
-        }).catch(err => {
+        }).catch(error => {
             vm.loading = false;
-            if (err.message === 'Network Error') {
+
+            if (error.message === 'Network Error') {
                 vm.maintenanceMode = true;
             }
         });
@@ -60,16 +62,19 @@ export default {
     computed: {
         ...mapGetters([
             'isAuthenticated',
-            'blogs',
-            'gainedThisWeek'
+            'blogs'
         ])
     },
     methods: {
         ...mapActions([
             'getUser',
             'getAllBlogs',
-            'checkAuth'
-        ])
+            'checkAuth',
+            'getStats'
+        ]),
+        async gainedThisWeek(blog) {
+            return stats.mean(await this.getStats({url: blog.url, limit: 7}));
+        }
     },
     components: {
         loader

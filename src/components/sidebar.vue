@@ -9,20 +9,18 @@
                     </a>
                     <li class="mt">
                         <router-link :to="{ name: 'home' }">
-                            <i class="fa fa-dashboard"></i>
-                            <span>Dashboard</span>
+                            <icon name="dashboard"class="fa-fw"></icon> <span>Dashboard</span>
                         </router-link>
                     </li>
                     <li>
                         <router-link :to="{ name: 'account' }">
-                            <i class="fa fa-calendar-o"></i>
-                            <span>Account</span>
+                            <icon name="calendar-o"class="fa-fw"></icon> <span>Account</span>
                         </router-link>
                     </li>
                     <template v-if="blogs.length >= 1">
                         <li class="sub-menu">
                             <a @click="expand">
-                                <i class="fa fa-bar-chart"></i> <span>Stats</span>
+                                <icon name="bar-chart"class="fa-fw"></icon> <span>Stats</span>
                             </a>
                             <ul class="sub">
                                 <li v-for="blog in blogs">
@@ -31,11 +29,11 @@
                             </ul>
                         </li>
                         <li>
-                            <router-link :to="{ name: 'queues' }"><i class="fa fa-calendar-o"></i> <span>Queues</span></router-link>
+                            <router-link :to="{ name: 'queues' }"><icon name="calendar-o"class="fa-fw"></icon> <span>Queues</span></router-link>
                         </li>
                         <li class="sub-menu">
                             <a @click="expand">
-                                <i class="fa fa-globe"></i> <span>Counters</span>
+                                <icon name="globe"class="fa-fw"></icon> <span>Counters</span>
                             </a>
                             <ul class="sub">
                                 <li v-for="blog in blogs">
@@ -62,6 +60,11 @@
 </template>
 
 <script>
+import 'vue-awesome/icons/dashboard'; // eslint-disable-line import/no-unassigned-import
+import 'vue-awesome/icons/calendar-o'; // eslint-disable-line import/no-unassigned-import
+import 'vue-awesome/icons/bar-chart'; // eslint-disable-line import/no-unassigned-import
+import 'vue-awesome/icons/globe'; // eslint-disable-line import/no-unassigned-import
+
 export default {
     name: 'sidebar',
     props: [

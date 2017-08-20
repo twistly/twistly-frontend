@@ -17,9 +17,6 @@ export default {
     },
     computed: {
         ...mapGetters([
-            'isAuthenticated',
-            'blogs',
-            'gainedThisWeek',
             'user'
         ])
     }

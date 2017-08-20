@@ -26,7 +26,7 @@ const actions = {
             user.getUser().then(({user}) => {
                 commit(types.USER_RECIEVE_SINGLUAR, {user});
                 resolve({user});
-            }).catch(err => {
+            }).catch(err => { // eslint-disable-line unicorn/catch-error-name
                 const {error, stack} = err.response.data;
                 commit(types.USER_FAILURE, {error, stack});
                 reject(err);

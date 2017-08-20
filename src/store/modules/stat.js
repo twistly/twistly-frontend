@@ -14,12 +14,12 @@ const getters = {
 };
 
 const actions = {
-    getStats({commit}, {blogUrl, limit}) {
+    getStats({commit}, {url, limit}) {
         return new Promise((resolve, reject) => {
-            stat.getStats({blogUrl, limit}).then(({stats}) => {
+            stat.getStats({url, limit}).then(stats => {
                 commit(types.STAT_RECIEVE_MULTIPLE, {stats});
-                resolve({stats});
-            }).catch(err => {
+                resolve(stats);
+            }).catch(err => { // eslint-disable-line unicorn/catch-error-name
                 const {error, stack} = err.response.data;
                 commit(types.STAT_FAILURE, {error, stack});
                 reject(err);

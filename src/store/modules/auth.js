@@ -1,5 +1,6 @@
 import dotProp from 'dot-prop';
-import {auth} from '../../api/';
+import router from '../../router';
+import {auth} from '../../api';
 import * as types from '../mutation-types';
 
 const state = {
@@ -29,7 +30,7 @@ const actions = {
             auth.signin({username, password}).then(({token}) => {
                 commit(types.AUTHENTICATION_SUCCESS, {token});
                 resolve({token});
-            }).catch(err => {
+            }).catch(err => { // eslint-disable-line unicorn/catch-error-name
                 if (err.message) {
                     commit(types.AUTHENTICATION_FAILURE, {
                         error: err
@@ -46,7 +47,7 @@ const actions = {
             auth.signup({username, email, password}).then(({token}) => {
                 commit(types.AUTHENTICATION_SUCCESS, {token});
                 resolve({token});
-            }).catch(err => {
+            }).catch(err => { // eslint-disable-line unicorn/catch-error-name
                 if (err.message) {
                     commit(types.AUTHENTICATION_FAILURE, {
                         error: err
@@ -74,6 +75,12 @@ const actions = {
             }
             resolve({token});
         });
+    },
+    tokenExpired({commit}) {
+        return new Promise(resolve => {
+            commit(types.AUTHENTICATION_TOKEN_EXPIRED);
+            resolve();
+        });
     }
 };
 
@@ -95,6 +102,13 @@ const mutations = {
         state.isAuthenticated = false;
         state.error = null;
         state.stack = null;
+    },
+    [types.AUTHENTICATION_TOKEN_EXPIRED](state) {
+        localStorage.removeItem('token');
+        state.isAuthenticated = false;
+        state.error = null;
+        state.stack = null;
+        router.push({name: 'signin'});
     }
 };
 

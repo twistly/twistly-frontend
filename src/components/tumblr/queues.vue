@@ -1,46 +1,18 @@
 <template>
     <div class="row">
-        {{newQueue}}
+        <div v-if="displayErrors" class="debug">{{newQueue}}</div>
         <div v-if="displayErrors" class="error">{{error}} {{stack}}</div>
-        <template v-if="queues.length >= 1">
-            <div v-for="queue in queues" class="form-panel col-md-4 col-sm-4 mb">
-                <form class="form-horizontal style-form">
-                    <div class="form-group">
-                        <label class="col-sm-2 control-label">Start time</label>
-                        <div class="col-sm-10">
-                            <p class="form-control-static">{{queue.startHour}}</p>
-                        </div>
-                    </div>
-                    <div class="form-group">
-                        <label class="col-sm-2 control-label">End time</label>
-                        <div class="col-sm-10">
-                            <p class="form-control-static">{{queue.endHour}}</p>
-                        </div>
-                    </div>
-                    <div class="form-group">
-                        <label class="col-sm-2 control-label">Amount of posts</label>
-                        <div class="col-sm-10">
-                            <p class="form-control-static">{{queue.interval}}</p>
-                        </div>
-                    </div>
-                    <div class="form-group">
-                        <label class="col-sm-2 control-label">Last run time</label>
-                        <div class="col-sm-10">
-                            <p class="form-control-static">
-                                <time datetime="2017-05-26T06:29:23.721Z">2017-05-26T06:29:23.721Z</time>
-                            </p>
-                        </div>
-                    </div>
-                </form>
-                <button @clicl="deleteQueue(queue._id)" class="btn btn-theme04">Delete</button>
-            </div>
-        </template>
-        <div v-else>
-            No Queues found.
+        <div class="col-md-12 col-sm-12">
             <button @click="showModal" class="btn">Create a new queue?</button>
             <modal name="new-queue" :adaptive="true">
-                <div class="form-panel">
-                    <form class="form-horizontal">
+                <div class="form-panel" style="box-shadow: none;">
+                    <form v-on:submit.prevent="checkQueue" class="form-horizontal">
+                        <div class="form-group">
+                            <label class="col-sm-4 control-label">Queue name</label>
+                            <div class="col-sm-8">
+                                <input v-model="newQueue.name" :placeholder="newQueue.blogs.length ? newQueue.blogs + ' queue' : ''" class="form-control"/>
+                            </div>
+                        </div>
                         <div class="form-group">
                             <label class="col-sm-4 control-label">Amount of posts per queue</label>
                             <div class="col-sm-8">
@@ -50,27 +22,67 @@
                         <div class="form-group">
                             <label class="col-sm-4 control-label">Blogs that use this queue</label>
                             <div class="col-sm-8">
-                                <!-- Blogs: {{newQueue.blogs}} -->
-                                <!-- Add this back once the issue is fixed -->
-                                <!-- <typeahead :source="typeaheadSource" :onSelect="onSelect" :onChange="onChange" :limit="5"></typeahead> -->
+                                <input v-model="newQueue.blogs" :placeholder="blogs.map(blog => blog.url).join(', ')" class="form-control"></input>
                             </div>
                         </div>
                         <div class="form-group">
-                            <label class="col-sm-4 control-label">Start Hour (0 - 24)</label>
+                            <label class="col-sm-4 control-label">Start Hour (0 - 23)</label>
                             <div class="col-sm-8">
-                                <input type="number" v-model="newQueue.startHour" min="0" max="24" class="form-control"/>
+                                <input type="number" v-model="newQueue.startHour" min="0" max="23" class="form-control"/>
                             </div>
                         </div>
                         <div class="form-group">
-                            <label class="col-sm-4 control-label">End Hour (0 - 24)</label>
+                            <label class="col-sm-4 control-label">End Hour (0 - 23)</label>
                             <div class="col-sm-8">
-                                <input type="number" v-model="newQueue.endHour" min="0" max="24" class="form-control"/>
+                                <input type="number" v-model="newQueue.endHour" min="0" max="23" class="form-control"/>
                             </div>
                         </div>
-                        <button @click="addQueue">Add queue</button>
+                        <button class="btn btn-success">Add queue</button>
                     </form>
                 </div>
             </modal>
+        </div>
+        <template v-if="queues.length >= 1">
+            <div v-for="queue in queues" class="form-panel col-md-3 col-sm-3 mb">
+                <form class="form-horizontal style-form">
+                    <div class="form-group">
+                        <label class="col-sm-8 control-label">Name</label>
+                        <div class="col-sm-4">
+                            <p class="form-control-static">{{queue.name}}</p>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-sm-8 control-label">Start time</label>
+                        <div class="col-sm-4">
+                            <p class="form-control-static">{{queue.startHour}}</p>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-sm-8 control-label">End time</label>
+                        <div class="col-sm-4">
+                            <p class="form-control-static">{{queue.endHour}}</p>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-sm-8 control-label">Amount of posts</label>
+                        <div class="col-sm-4">
+                            <p class="form-control-static">{{queue.interval}}</p>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-sm-8 control-label">Last run time</label>
+                        <div class="col-sm-4">
+                            <p class="form-control-static">
+                                <time :datetime="queue.lastRun">{{queue.lastRun}}</time>
+                            </p>
+                        </div>
+                    </div>
+                </form>
+                <button @click="deleteQueue(queue._id)" class="btn btn-theme04">Delete</button>
+            </div>
+        </template>
+        <div v-else>
+            No Queues found.
         </div>
     </div>
 </template>
@@ -89,6 +101,7 @@ export default {
             stack: null,
             loading: false,
             newQueue: {
+                name,
                 blogs: [],
                 interval: null,
                 startHour: null,
@@ -99,7 +112,7 @@ export default {
     mounted() {
         const vm = this;
         vm.loading = true;
-        vm.getQueues({}).catch(() => {
+        vm.getQueues().catch(() => {
             vm.error = vm.queueError || null;
             vm.stack = vm.queueStack || null;
             vm.showError = vm.hasRole('admin') || false;
@@ -113,17 +126,13 @@ export default {
             'queueError',
             'queueStack',
             'isAuthenticated'
-        ]),
-        typeaheadSource() {
-            const vm = this;
-            return vm.blogs.slice(0).map(blog => {
-                return blog.url;
-            });
-        }
+        ])
     },
     methods: {
         ...mapActions([
-            'getQueues'
+            'getQueues',
+            'addQueue',
+            'deleteQueue'
         ]),
         finishedLoading() {
             const vm = this;
@@ -135,14 +144,22 @@ export default {
         showModal() {
             this.$modal.show('new-queue');
         },
-        addQueue() {
-            //
-        },
-        onSelect(value) {
-            this.value = value;
-        },
-        onChange(value) {
-            this.value = value;
+        checkQueue() {
+            const vm = this;
+            const queue = Object.assign({}, this.newQueue);
+
+            vm.loading = true;
+
+            queue.blogs = queue.blogs.split(', ').filter(x => x.trim()).map(blog => {
+                const found = vm.blogs.filter(foundBlog => foundBlog.url === blog);
+                return found.length ? found[0]._id : undefined;
+            }).filter(x => x);
+
+            this.addQueue(queue).then(() => {
+                return vm.finishedLoading();
+            }).catch(error => {
+                this.error = error;
+            });
         }
     }
 };

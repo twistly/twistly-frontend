@@ -1,5 +1,6 @@
 import axios from 'axios';
-
+import wrapper from 'axios-cache-plugin';
+import store from '../store';
 import {apiLogger as log} from '../log';
 
 const api = axios.create({
@@ -9,6 +10,11 @@ const api = axios.create({
         Accept: 'application/json',
         'Content-Type': 'application/json'
     }
+});
+
+const cache = wrapper(api, {
+    maxCacheSize: 15,
+    ttl: 1000
 });
 
 api.interceptors.request.use(request => {
@@ -21,14 +27,14 @@ api.interceptors.request.use(request => {
     }
 
     return request;
-}, err => Promise.reject(err));
+});
 
-api.interceptors.response.use(response => {
-    if (response.status && (response.status.code === 401 || response.status.code === 403)) {
-        localStorage.removeItem('token');
+api.interceptors.response.use(response => response, error => {
+    if (error.response.status === 401) {
+        store._actions.tokenExpired[0]();
+    } else {
+        return Promise.reject(error);
     }
+});
 
-    return response;
-}, err => Promise.reject(err));
-
-export default api;
+export default cache;

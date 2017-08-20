@@ -2,9 +2,9 @@
     <loader v-if="loading" type="square"></loader>
     <section v-else id="container">
         <header class="header black-bg">
-            <div v-if="isAuthenticated && !maintenanceMode" class="sidebar-toggle-box">
-                <div class="fa fa-bars tooltips" @click="toggleSidebar"></div>
-            </div>
+            <span v-if="isAuthenticated && !maintenanceMode" class="sidebar-toggle-box" @click="toggleSidebar">
+                <icon name="bars" class="tooltips"></icon>
+            </span>
             <router-link :to="{ name: 'home' }" class="logo"><b>Twistly</b></router-link>
             <div v-if="!maintenanceMode" class="top-menu">
                 <ul class="nav pull-right top-menu">
@@ -40,11 +40,10 @@
 
 <script>
 import {mapGetters, mapActions} from 'vuex';
-
+import 'vue-awesome/icons/bars'; // eslint-disable-line import/no-unassigned-import
 import api from '../api';
 import {env} from '../utils';
 import {version} from '../../package';
-
 import loader from './loader.vue';
 import sidebar from './sidebar.vue';
 
@@ -73,9 +72,9 @@ export default {
             }
         }).then(() => {
             vm.loading = false;
-        }).catch(err => {
+        }).catch(error => {
             vm.loading = false;
-            if (err.message === 'Network Error') {
+            if (error.message === 'Network Error') {
                 vm.maintenanceMode = true;
             }
         });
@@ -163,9 +162,6 @@ span.credit {
 #main-content.sidebar-closed {
     margin: 0;
 }
-</style>
-
-<style scoped>
 .env {
     background-color: #333;
     color: #DDD;
@@ -173,5 +169,12 @@ span.credit {
     bottom: 2px;
     right: 2px;
     padding: 7px;
+}
+
+.sidebar-toggle-box {
+    margin-right: 15px;
+    padding: 0;
+    cursor: pointer;
+    cursor: hand;
 }
 </style>

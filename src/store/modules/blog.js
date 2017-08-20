@@ -33,7 +33,7 @@ const actions = {
             blog.getBlogs().then(({blogs}) => {
                 commit(types.BLOG_RECIEVE_MULTIPLE, {blogs});
                 resolve({blogs});
-            }).catch(err => {
+            }).catch(err => { // eslint-disable-line unicorn/catch-error-name
                 const {error, stack} = err.response.data;
                 commit(types.AUTHENTICATION_FAILURE, {error, stack});
                 reject(err);
@@ -47,7 +47,7 @@ const mutations = {
     [types.BLOG_RECIEVE_MULTIPLE](state, {blogs}) {
         state.blogs = blogs;
     },
-    // Add a single series to the store
+    // Add a single blog to the store
     [types.BLOG_RECIEVE_SINGULAR](state, {blog}) {
         let foundBlog = state.blogs.find(x => x.id === blog.id);
         if (foundBlog) {
