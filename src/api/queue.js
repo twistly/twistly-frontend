@@ -2,14 +2,13 @@ import api from './api';
 
 const getQueues = () => {
     return new Promise((resolve, reject) => {
-        api.get('queue').then(({data}) => {
-            resolve(data.queues);
-        }).catch(error => {
-            if (error.response.status === 404) {
+        api.get('queue').then(({status, data}) => {
+            if (status === 204) {
                 return resolve([]);
             }
-            reject(error);
-        });
+
+            return resolve(data);
+        }).catch(reject);
     });
 };
 
