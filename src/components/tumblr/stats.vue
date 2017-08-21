@@ -4,7 +4,7 @@
         <template v-else>
             <div class="row mt">
                 <div class="col-lg-12">
-                    <div v-if="stats.length">
+                    <div v-if="stats.length !== 0">
                         <div id="statTable" class="col-lg-5 col-md-6 center-block" style='float: none; color: white;'>
                             <div class="panel darkblue-panel" style='text-align: left;'>
                                 <div class="panel-body">
@@ -127,6 +127,10 @@ export default {
         const vm = this;
         vm.loading = true;
         vm.getStats({url: vm.$route.params.blogUrl}).then(stats => {
+            if (stats.length === 0) {
+                return;
+            }
+
             const now = new Date();
 
             vm.currentFollowers = stats.slice(0).sort((a, b) => {
@@ -139,8 +143,7 @@ export default {
                 const oneDayAgo = now.getTime() - ONE_DAY;
                 return new Date(stat.date).getTime() >= oneDayAgo;
             });
-            vm.loading = false;
-        });
+        }).then(vm.finishedLoading()).catch(vm.finishedLoading());
     },
     computed: {
         ...mapGetters([
@@ -155,6 +158,13 @@ export default {
         format(str, format = '0,0') {
             const vm = this;
             return numeral(Number(str)).format(format).toLocaleString(vm.language);
+        },
+        finishedLoading() {
+            const vm = this;
+            return new Promise(resolve => {
+                vm.loading = false;
+                resolve();
+            });
         }
     },
     components: {
