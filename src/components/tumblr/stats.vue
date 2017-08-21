@@ -77,6 +77,8 @@ import {mapGetters, mapActions} from 'vuex';
 import loader from '../loader.vue';
 import chart from '../chart.vue';
 
+const ONE_DAY = 86400;
+
 export default {
     name: 'stats',
     data() {
@@ -124,9 +126,8 @@ export default {
     mounted() {
         const vm = this;
         vm.loading = true;
-        vm.getStats({blogUrl: vm.$route.params.blogUrl}).then(({stats}) => {
+        vm.getStats({url: vm.$route.params.blogUrl}).then(stats => {
             const now = new Date();
-            const oneDay = 86400;
 
             vm.currentFollowers = stats.slice(0).sort((a, b) => {
                 const distancea = Math.abs(now - a.date);
@@ -135,9 +136,7 @@ export default {
             })[0].followerCount;
 
             vm.chart.day.data = stats.slice(0).filter(stat => {
-                const oneDayAgo = now.getTime() - oneDay;
-                console.log(new Date(stat.date));
-                console.log((now.getTime() - (new Date(stat.date)).getTime()) / oneDay);
+                const oneDayAgo = now.getTime() - ONE_DAY;
                 return new Date(stat.date).getTime() >= oneDayAgo;
             });
             vm.loading = false;
