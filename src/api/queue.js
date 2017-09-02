@@ -7,7 +7,7 @@ const getQueues = () => {
                 return resolve([]);
             }
 
-            return resolve(data);
+            return resolve(data.queues);
         }).catch(reject);
     });
 };
