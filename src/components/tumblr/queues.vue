@@ -26,15 +26,15 @@
                             </div>
                         </div>
                         <div class="form-group">
-                            <label class="col-sm-4 control-label">Start Hour (0 - 23)</label>
+                            <label class="col-sm-4 control-label">Start time (0 - 23)</label>
                             <div class="col-sm-8">
-                                <input type="number" v-model="newQueue.startHour" min="0" max="23" class="form-control"/>
+                                <input type="number" v-model="newQueue.startTime" min="0" max="23" class="form-control"/>
                             </div>
                         </div>
                         <div class="form-group">
-                            <label class="col-sm-4 control-label">End Hour (0 - 23)</label>
+                            <label class="col-sm-4 control-label">End time (0 - 23)</label>
                             <div class="col-sm-8">
-                                <input type="number" v-model="newQueue.endHour" min="0" max="23" class="form-control"/>
+                                <input type="number" v-model="newQueue.endTime" min="0" max="23" class="form-control"/>
                             </div>
                         </div>
                         <button class="btn btn-success">Add queue</button>
@@ -54,13 +54,13 @@
                     <div class="form-group">
                         <label class="col-sm-8 control-label">Start time</label>
                         <div class="col-sm-4">
-                            <p class="form-control-static">{{queue.startHour}}</p>
+                            <p class="form-control-static">{{queue.startTime}}</p>
                         </div>
                     </div>
                     <div class="form-group">
                         <label class="col-sm-8 control-label">End time</label>
                         <div class="col-sm-4">
-                            <p class="form-control-static">{{queue.endHour}}</p>
+                            <p class="form-control-static">{{queue.endTime}}</p>
                         </div>
                     </div>
                     <div class="form-group">
@@ -90,6 +90,10 @@
 <script>
 import {mapGetters, mapActions} from 'vuex';
 
+const ONE_SECOND = 1000;
+const ONE_MINUTE = 60 * ONE_SECOND;
+const ONE_HOUR = 60 * ONE_MINUTE;
+
 export default {
     name: 'queues',
     props: {
@@ -101,11 +105,11 @@ export default {
             stack: null,
             loading: false,
             newQueue: {
-                name,
+                name: null,
                 blogs: [],
                 interval: null,
-                startHour: null,
-                endHour: null
+                startTime: null,
+                endTime: null
             }
         };
     },
@@ -146,7 +150,14 @@ export default {
         },
         checkQueue() {
             const vm = this;
-            const queue = Object.assign({}, this.newQueue);
+            const {name, blogs, interval, startTime, endTime} = vm.newQueue;
+            const queue = Object.assign({}, {
+                name,
+                blogs,
+                interval,
+                startTime: startTime * ONE_HOUR,
+                endTime: endTime * ONE_HOUR
+            });
 
             vm.loading = true;
 

@@ -27,9 +27,9 @@ const actions = {
             });
         });
     },
-    addQueue({commit}, {name, blogs, interval, startHour, endHour}) {
+    addQueue({commit}, {name, blogs, interval, startTime, endTime}) {
         return new Promise((resolve, reject) => {
-            queue.addQueue({name, blogs, interval, startHour, endHour}).then(queue => {
+            queue.addQueue({name, blogs, interval, startTime, endTime}).then(queue => {
                 commit(types.QUEUE_RECIEVE_SINGULAR, queue);
                 resolve(queue);
             }).catch(err => { // eslint-disable-line unicorn/catch-error-name

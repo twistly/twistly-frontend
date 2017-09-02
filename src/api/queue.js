@@ -12,9 +12,9 @@ const getQueues = () => {
     });
 };
 
-const addQueue = ({name, blogs, interval, startHour, endHour}) => {
+const addQueue = ({name, blogs, interval, startTime, endTime}) => {
     return new Promise((resolve, reject) => {
-        api.post('queue', {name, blogs, interval, startHour, endHour}).then(({data}) => {
+        api.post('queue', {name, blogs, interval, startTime, endTime}).then(({data}) => {
             resolve(data.queues);
         }).catch(reject);
     });
