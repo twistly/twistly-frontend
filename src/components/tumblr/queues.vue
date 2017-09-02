@@ -4,7 +4,7 @@
         <div v-if="displayErrors" class="error">{{error}} {{stack}}</div>
         <div class="col-md-12 col-sm-12">
             <button @click="showModal" class="btn">Create a new queue?</button>
-            <modal name="new-queue" :adaptive="true">
+            <modal name="new-queue" :adaptive="true" height="auto">
                 <div class="form-panel" style="box-shadow: none;">
                     <form v-on:submit.prevent="checkQueue" class="form-horizontal">
                         <div class="form-group">
@@ -188,5 +188,8 @@ export default {
 }
 .shuffle {
     margin: 0;
+}
+.v--modal-box.v--modal {
+    height: auto !important;
 }
 </style>
