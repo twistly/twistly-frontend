@@ -12,9 +12,9 @@
                     <a href="/signin#myModal">Forgot your password?</a>
                 </span>
             </label>
-            <button class="btn btn-theme btn-block" @click="trySignin()">
+            <a class="button" @click="trySignin()">
                 <i class="fa fa-lock"></i> Signin
-            </button>
+            </a>
             <hr>
             <div class="registration">
                 Don't have an account yet?

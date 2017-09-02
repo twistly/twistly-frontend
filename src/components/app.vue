@@ -1,7 +1,7 @@
 <template>
     <loader v-if="loading" type="square"></loader>
     <section v-else id="container">
-        <header class="header black-bg">
+        <header class="header">
             <span v-if="isAuthenticated && !maintenanceMode" class="sidebar-toggle-box" @click="toggleSidebar">
                 <icon name="bars" class="tooltips"></icon>
             </span>
@@ -10,18 +10,18 @@
                 <ul class="nav pull-right top-menu">
                     <template v-if="isAuthenticated">
                         <li>
-                           <button v-if="hasRole('admin')" @click="toggleErrors" class="error-button">{{displayErrors ? 'Hide' : 'Show'}} errors</button>
+                           <button v-if="hasRole('admin')" @click="toggleErrors" class="button">{{displayErrors ? 'Hide' : 'Show'}} errors</button>
                         </li>
                         <li>
-                            <router-link :to="{ name: 'signout' }" class="auth-button">Signout</router-link>
+                            <router-link :to="{ name: 'signout' }" class="button">Signout</router-link>
                         </li>
                     </template>
                     <template v-else>
                         <li>
-                            <router-link :to="{ name: 'signin' }" class="auth-button">Signin</router-link>
+                            <router-link :to="{ name: 'signin' }" class="button">Signin</router-link>
                         </li>
                         <li>
-                            <router-link :to="{ name: 'signup' }" class="auth-button">Signup</router-link>
+                            <router-link :to="{ name: 'signup' }" class="button">Signup</router-link>
                         </li>
                     </template>
                 </ul>
@@ -113,6 +113,22 @@ export default {
 </script>
 
 <style>
+button:focus {outline:0;}
+
+.button {
+    padding: 4px 8px !important;
+    color: white !important;
+    background-color: #727E92 !important;
+    text-transform: uppercase !important;
+    font-size: 12px !important;
+    border: 1px solid #666666 !important;
+    border-radius: 0 !important;
+}
+
+.button + .button {
+    margin-right: 5px;
+}
+
 #nav-accordion {
     height: 100%;
     overflow: scroll;
@@ -134,26 +150,8 @@ span.credit {
 }
 </style>
 <style scoped>
-.auth-button {
-    color: #f2f2f2;
-    font-size: 12px;
-    border-radius: 4px;
-    -webkit-border-radius: 4px;
-    border: 1px solid #64c3c2 !important;
-    padding: 5px 15px;
+header .button {
     margin-right: 15px;
-    background: #68dff0;
-    margin-top: 15px;
-}
-.error-button {
-    color: azure;
-    font-size: 12px;
-    border-radius: 4px;
-    -webkit-border-radius: 4px;
-    border: 1px solid indianred !important;
-    padding: 5px 15px;
-    margin-right: 15px;
-    background: indianred;
     margin-top: 15px;
 }
 #main-content {

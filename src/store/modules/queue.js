@@ -55,7 +55,7 @@ const actions = {
 
 const mutations = {
     [types.QUEUE_RECIEVE_SINGULAR](state, queue) {
-        let foundQueue = state.queues.find(x => x.id === queue.id);
+        let foundQueue = state.queues.find(x => x._id === queue._id);
         if (foundQueue) {
             // Replace current store's version of the queue with the new one
             foundQueue = queue;

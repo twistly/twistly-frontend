@@ -3,10 +3,10 @@
         <div v-if="displayErrors" class="debug">{{newQueue}}</div>
         <div v-if="displayErrors" class="error">{{error}} {{stack}}</div>
         <div class="col-md-12 col-sm-12">
-            <button @click="showModal" class="btn">Create a new queue?</button>
+            <button @click="showModal" class="button">Create a new queue?</button>
             <modal name="new-queue" :adaptive="true">
-                <div class="form-panel" style="box-shadow: none;">
-                    <form v-on:submit.prevent="checkQueue" class="form-horizontal">
+                <div class="form-panel box" style="box-shadow: none;">
+                    <form v-on:submit.prevent="checkQueue" class="form-horizontal clearfix">
                         <div class="form-group">
                             <label class="col-sm-4 control-label">Queue name</label>
                             <div class="col-sm-8">
@@ -37,14 +37,14 @@
                                 <input type="number" v-model="newQueue.endTime" min="0" max="24" class="form-control"/>
                             </div>
                         </div>
-                        <button class="btn btn-success">Add queue</button>
+                        <button class="button">Add queue</button>
                     </form>
                 </div>
             </modal>
         </div>
         <template v-if="queues.length >= 1">
-            <div v-for="queue in queues" class="form-panel col-md-3 col-sm-3 mb">
-                <form class="form-horizontal style-form">
+            <div v-for="queue in queues" class="form-panel col-md-3 col-sm-3 mb box">
+                <form class="form-horizontal">
                     <div class="form-group">
                         <label class="col-sm-8 control-label">Name</label>
                         <div class="col-sm-4">
@@ -77,8 +77,17 @@
                             </p>
                         </div>
                     </div>
+                    <div class="form-group">
+                        <label class="col-sm-8 control-label">Next run time</label>
+                        <div class="col-sm-4">
+                            <p class="form-control-static">
+                                <time :datetime="queue.lastRun">{{queue.nextRun}}</time>
+                            </p>
+                        </div>
+                    </div>
                 </form>
-                <button @click="deleteQueue(queue._id)" class="btn btn-theme04">Delete</button>
+                <button @click="deleteQueue(queue._id)" class="button">Delete</button>
+                <button @click="shuffleQueue(queue._id)" class="button">Shuffle</button>
             </div>
         </template>
         <div v-else>
@@ -190,13 +199,35 @@ export default {
 };
 </script>
 
-<style scoped>
+<style>
 .form-horizontal.style-form .form-group:last-of-type {
     border: none;
     padding-bottom: 0;
     margin-bottom: 0;
 }
-.shuffle {
-    margin: 0;
+
+.box {
+    background-color: #2a2d35;
+    margin: 10px;
+    padding: 10px;
+    box-shadow: 0px 1px 3px #202125;
+    text-align: left;
+}
+
+.v--modal-box.v--modal {
+    background: 0;
+    box-shadow: none;
+}
+
+input.form-control {
+    border-radius: 0;
+    padding: 4px;
+}
+
+.clearfix::after {
+   content: " ";
+   display: block;
+   height: 0;
+   clear: both;
 }
 </style>
