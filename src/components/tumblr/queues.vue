@@ -34,7 +34,7 @@
                         <div class="form-group">
                             <label class="col-sm-4 control-label">End time (0 - 24)</label>
                             <div class="col-sm-8">
-                                <input type="number" v-model="newQueue.endTime" min="0" max="23" class="form-control"/>
+                                <input type="number" v-model="newQueue.endTime" min="0" max="24" class="form-control"/>
                             </div>
                         </div>
                         <button class="btn btn-success">Add queue</button>
@@ -162,6 +162,11 @@ export default {
                 endTime: endTime * ONE_HOUR
             });
 
+            if (blogs.length === 0) {
+                this.error = `You need to add atleast one blog to the queue.`;
+                return vm.finishedLoading();
+            }
+
             this.$modal.hide('new-queue');
             vm.loading = true;
 
@@ -170,10 +175,15 @@ export default {
                 return found.length ? found[0]._id : undefined;
             }).filter(x => x);
 
-            this.addQueue(queue).then(() => {
+            if (queue.blogs.length === 0 && blogs.length >= 1) {
+                this.error = `You don't have access to that blog.`;
                 return vm.finishedLoading();
-            }).catch(error => {
+            }
+
+            this.addQueue(queue).catch(error => {
                 this.error = error;
+            }).then(() => {
+                return vm.finishedLoading();
             });
         }
     }
