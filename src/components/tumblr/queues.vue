@@ -32,7 +32,7 @@
                             </div>
                         </div>
                         <div class="form-group">
-                            <label class="col-sm-4 control-label">End time (0 - 23)</label>
+                            <label class="col-sm-4 control-label">End time (0 - 24)</label>
                             <div class="col-sm-8">
                                 <input type="number" v-model="newQueue.endTime" min="0" max="23" class="form-control"/>
                             </div>
@@ -54,13 +54,13 @@
                     <div class="form-group">
                         <label class="col-sm-8 control-label">Start time</label>
                         <div class="col-sm-4">
-                            <p class="form-control-static">{{queue.startTime}}</p>
+                            <p class="form-control-static">{{queue.startTime / ONE_HOUR}}</p>
                         </div>
                     </div>
                     <div class="form-group">
                         <label class="col-sm-8 control-label">End time</label>
                         <div class="col-sm-4">
-                            <p class="form-control-static">{{queue.endTime}}</p>
+                            <p class="form-control-static">{{queue.endTime / ONE_HOUR}}</p>
                         </div>
                     </div>
                     <div class="form-group">
