@@ -123,6 +123,7 @@ button:focus {outline:0;}
     font-size: 12px !important;
     border: 1px solid #666666 !important;
     border-radius: 0 !important;
+    cursor: pointer;
 }
 
 .button + .button {
@@ -134,7 +135,7 @@ button:focus {outline:0;}
     overflow: scroll;
 }
 span.credit {
-    background: #424a5d;
+    background: #2b2d35;
     padding-top: 5px;
 }
 #main-content {
@@ -147,6 +148,10 @@ span.credit {
 .error {
     border: 3px solid red;
     padding: 5px;
+}
+
+#sidebar {
+    background-color: #2b2d35;
 }
 </style>
 <style scoped>
