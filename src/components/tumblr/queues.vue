@@ -159,6 +159,7 @@ export default {
                 endTime: endTime * ONE_HOUR
             });
 
+            this.$modal.hide('new-queue');
             vm.loading = true;
 
             queue.blogs = queue.blogs.split(', ').filter(x => x.trim()).map(blog => {
