@@ -110,7 +110,10 @@ export default {
                 interval: null,
                 startTime: null,
                 endTime: null
-            }
+            },
+            ONE_SECOND,
+            ONE_MINUTE,
+            ONE_HOUR
         };
     },
     mounted() {
